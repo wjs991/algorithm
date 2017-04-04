@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> 계산기 예제 </title>
+        <style>
+            table,td{
+                border:1px solid black;
+                /*border-collapse: collapse;*/
+            }
+            td{ 
+                padding: 5px 10px 5px 10px ;
+                width: 30px;
+                height: 50px;
+                text-align: center;
+            }
+            #result{
+                text-align: right;
+                font-size: 30;
+            }
+            .button:hover{
+                background-color: green;
+                color: wheat;
+                font-weight: 600; /* font-weight:글자 굵기*/
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+    
+         <!-- -->
+        <table cellspacing="10px"> <!-- cellspacing: 줄간격 -->
+            <td id="result" colspan="5">0</td> <!-- 출력창  -->
+            <tr>
+                <td class="button">MC</td>
+                <td class="button">MR</td>
+                <td class="button">MS</td>
+                <td class="button">M+</td>
+                <td class="button">M-</td>
+             </tr>
+            <tr>
+                <td class="button" onclick="backS()">←</td>
+                <td class="button">CE</td>
+                <td class="button" onclick="init()">C</td>
+                <td class="button" onclick="chg()">+-</td>
+                <td class="button">√</td>
+             </tr>
+            
+            <tr>
+                <td class="button" onclick="inNum(7)">7</td>
+                <td class="button" onclick="inNum(8)">8</td>
+                <td class="button" onclick="inNum(9)">9</td>
+                <td class="button" onclick="oper('/')">/</td>
+                <td class="button">%</td>
+             </tr>
+            <tr>
+                <td class="button" onclick="inNum(4)">4</td>
+                <td class="button" onclick="inNum(5)">5</td>
+                <td class="button" onclick="inNum(6)">6</td>
+                <td class="button" onclick="oper('*')">*</td>
+                <td class="button">1/x</td>
+             </tr>
+            <tr>
+                <td class="button" onclick="inNum(1)">1</td>
+                <td class="button" onclick="inNum(2)">2</td>
+                <td class="button" onclick="inNum(3)">3</td>
+                <td class="button" onclick="oper('-')">-</td>
+                <td class="button" rowspan="2">=</td>
+                
+            </tr>
+            <tr>
+                <td class="button" colspan="2" onclick="inNum(0)">0</td>
+                <td class="button">.</td>
+                <td class="button" onclick="oper('+')">+</td>
+             </tr>
+        </table>
+        
+    </body>
+    <script>
+        /* 순서
+        1.버튼을 누르면 화면에 버튼이 표시된다.
+        2.버튼을 연속되게 누르면 숫자가 뒤에 붙는다.
+        3.초기화(C)버튼을 누르면 모두 초기화 된다.
+        4.백 스페이스를 누르면 뒤에서부터 한자리씩 지운다.
+        5.음수/양수 변환이 가능하게 한다.
+        6.연산자를 누르면 2번째 피연산자로 전환된다.
+        7.피연산자와 연산자를 서버로 전송한다.
+        */
+        
+        var digit1 = [];     //앞자리 수 저장
+        var digit2 = [];     //뒷자리 수 저장
+        
+        var opCode;          //연산자를 저장하는 변수.
+        var flag = 1; // 피연산자 순서
+        
+        var result = document.getElementById("result");
+        
+        function inNum(num){
+            if(flag == 1){
+                digit1.push(num);
+            }else{
+                digit2.push(num);
+            }
+            printVal();
+        }
+        //프린트 함수
+        
+        function printVal(ref){
+            var txt = ""; //표시해줄 값 변수   
+            if(flag == 1 ){
+                for(var i = 0; i<digit1.length;i++){
+                    txt += digit1[i];
+                }
+            }else{
+                for(var i = 0; i<digit2.length;i++){
+                    txt += digit2[i];
+                }
+            }
+        if(ref == "l"){//printVal("l")가 호출되면 0을 출력해라,배열크기가 1보다 크거나 같을때
+            if(result.innerHTML.length<=1){
+                txt="0";
+            }
+        }
+            result.innerHTML = txt;
+        }
+        
+        
+        
+        //초기화
+        function init(){
+            digit1 = [];
+            digit2 = [];
+            result.innerHTML = 0;
+        }
+        
+        
+        //백스페이스
+        function backS(){
+            if(flag == 1){
+                digit1.pop();
+            }else{
+                digit2.pop();
+            }
+            printVal("l");
+        }
+        
+        
+        function chg(){ //음수양수 변환버튼            
+            if(flag == 1 ){
+                if(digit1[0] == "-"){
+                    digit1.shift();
+                    result.style.color="black";
+                }else{
+                    digit1.unshift("-");
+                    result.style.color="red";
+                }             
+             }else{                
+                if(digit2[0] == "-"){
+                    digit2.shift();
+                    result.style.color="black";
+                }else{
+                    digit2.unshift("-");
+                    result.style.color="red";
+                }
+            }   
+            printVal();
+        }
+        
+            
+        
+        
+        //연산자 입력 함수
+        function oper(op){  
+            console.log(op);
+            if(flag == 1 ){
+                flag = 2;
+            opCode = op; //연산자를  opCode에 저장
+                result.innerHTML = 0; //digit1 누르고 연산자를 누르면 0으로 
+            }else{
+                alert("2항이상 연산을 지원하지 않습니다.");
+            }
+            
+            
+        }
+        
+        
+    </script>
+</html>

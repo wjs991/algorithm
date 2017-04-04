@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body {padding: 0; margin: 0; overflow: hidden;}
+    </style>
+<meta charset="EUC-KR">
+<title>pingpong</title>
+</head>
+<body>
+   <canvas id="canvas"></canvas>
+    <script>
+// 부드러운 애니메이션을 위한 코드
+window.requestAnimFrame = (function(){
+	return  window.requestAnimationFrame       || 
+		window.webkitRequestAnimationFrame || 
+		window.mozRequestAnimationFrame    || 
+		window.oRequestAnimationFrame      || 
+		window.msRequestAnimationFrame     ||  
+		function( callback ){
+			return window.setTimeout(callback, 1000 / 100);
+		};
+})();
+
+window.cancelRequestAnimFrame = ( function() {
+	return window.cancelAnimationFrame          ||
+		window.webkitCancelRequestAnimationFrame    ||
+		window.mozCancelRequestAnimationFrame       ||
+		window.oCancelRequestAnimationFrame     ||
+		window.msCancelRequestAnimationFrame        ||
+		clearTimeout
+} )();
+
+
+            // canvas 초기화
+        var canvas = document.getElementById("canvas"),
+                ctx = canvas.getContext("2d"), // Canvas 생성
+                W = window.innerWidth, // 윈도우 너비
+                H = window.innerHeight, // 윈도우 높이
+                ball = [], // 볼 객체를 저장할 배열
+                paddles = [2], // paddle두개를 저장할 배열
+                mouse = {}, // mouse object를 저장할 곳
+                points = 0, // 점수를 저장
+                fps = 60, // Max FPS 
+                startBtn = {}, // 시작 버튼 object
+                restartBtn = {}, // 재시작 버튼 object
+                over = 0, // game over 를 체크할 변수
+                init, // 애니메이션 초기화
+                level = 1,
+                count = 0;
+
+// 마우스 이벤트 정의
+canvas.addEventListener("mousemove", trackPosition, true);
+canvas.addEventListener("mousedown", btnClick, true);
+
+// 스크린 크기에 맞게 저장
+canvas.width = W;
+canvas.height = H;
+
+// canvas를 그린다.
+function paintCanvas() {
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, 0, W, H);
+}
+
+// paddle을 만든다
+function Paddle(pos) {
+	this.h = 10;
+	this.w = 350;
+	
+	this.x = W/2 - this.w/2;
+	this.y = (pos == "top") ? 0 : H - this.h;
+	
+}
+
+// paddles배열에 2개를 추가한다.
+paddles.push(new Paddle("bottom"));
+paddles.push(new Paddle("top"));
+        
+//공을 만들 함수
+function create_ball(){
+    this.x = 50;
+    this.y = 70;
+    this.radius = 5;
+    this.vx = 3;
+    this.vy = 5;
+}
+//초기에 사용할 공 1개를 ball배열에 추가한다.
+ball.push(new create_ball());
+//ball배열에 추가한 공을 그려준다.
+function draw_ball(){
+    for(var j=0;j<level;j++){
+    _ball=ball[j];
+    ctx.beginPath();
+    ctx.fillStlye= "red";
+    ctx.arc(_ball.x,_ball.y,_ball.radius,0,Math.PI*2,false);
+    ctx.fill();
+    
+    _ball.x+=_ball.vx;
+    _ball.y+=_ball.vy;
+    }
+}
+// 시작 버튼 object
+startBtn = {
+	w: 100,
+	h: 50,
+	x: W/2 - 50,
+	y: H/2 - 25,
+	
+	draw: function() {
+		ctx.strokeStyle = "blue";
+		ctx.lineWidth = "2";
+		ctx.strokeRect(this.x, this.y, this.w, this.h);
+		
+		ctx.font = "18px Arial, sans-serif";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.fillStlye = "red";
+		ctx.fillText("시작", W/2, H/2 );
+	}
+};
+
+// 재시작 버튼 object
+restartBtn = {
+	w: 100,
+	h: 50,
+	x: W/2 - 50,
+	y: H/2 - 50,
+	
+	draw: function() {
+		ctx.strokeStyle = "green";
+		ctx.lineWidth = "2";
+		ctx.strokeRect(this.x, this.y, this.w, this.h);
+		
+		ctx.font = "18px Arial, sans-serif";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.fillStlye = "white";
+		ctx.fillText("재시작", W/2, H/2 - 25 );
+	}
+};
+
+// canvas에 모두 그린다.
+function draw() {
+	paintCanvas();
+	for(var i = 0; i < paddles.length; i++) {
+		p = paddles[i];
+		
+		ctx.fillStyle = "red";
+		ctx.fillRect(p.x, p.y, p.w, p.h);
+	}
+    if(level>=2){
+        
+        ball.push(new create_ball());
+        draw_ball();
+    }
+	draw_ball();
+	update();
+}
+
+// 마우스 커서에 따라 저장
+function trackPosition(e) {
+	mouse.x = e.pageX;
+	mouse.y = e.pageY;
+}
+        
+//현 게임내에 연속적인 동작등을 수행한다.(충돌, 점수, 시간측정, paddle움직임, ball움직임)
+function update() {
+	
+	// 점수, 레벨, 시간 업데이트
+	updateScore(); 
+	updatelevel();
+    updateTime();
+	// paddle 움직임
+	if(mouse.x && mouse.y) {
+		for(var i = 1; i < paddles.length; i++) {
+			p = paddles[i];
+			p.x = mouse.x - p.w/2;
+		}		
+	}
+	
+    
+    
+    
+	// 공의 움직임
+    for(var j=0;j<level;j++){
+        ball[j].x += ball[j].vx;
+        ball[j].y += ball[j].vy;
+    
+   }
+	// paddle과의 충돌
+	p1 = paddles[1];
+	p2 = paddles[2];
+	
+
+    for(var j=0;j<level;j++ ){
+	if(collision(ball[j], p1)) {
+		collisionAction(ball[j], p1);
+	}
+	
+	
+	else if(collision(ball[j], p2)) {
+		collisionAction(ball[j], p2);
+	} 
+    
+    
+	
+	else {
+		//paddle을 넘어서 부딫히는 경우
+		if(ball[j].y + ball[j].radius > H) {
+            ball[j].vy = -ball[j].vy;
+			ball[j].y = H - ball[j].radius;
+			points--;
+            if(points<((level-1)*10)){
+                gameOver();
+            }
+		} 
+		
+		else if(ball[j].y < 0) {
+           ball[j].vy = -ball[j].vy;
+			ball[j].y = ball[j].radius;
+			points--;
+            if(points<((level-1)*10)){
+                gameOver();
+            }
+		}
+		
+		//벽에 부딫히는 부분
+		if(ball[j].x + ball[j].radius > W) {
+			ball[j].vx = -ball[j].vx;
+			ball[j].x = W - ball[j].radius;
+		}
+		
+		else if(ball[j].x -ball[j].radius < 0) {
+			ball[j].vx = -ball[j].vx;
+			ball[j].x = ball[j].radius;
+		}
+        
+	}
+    }
+    
+	
+}
+        
+        
+//충돌 판정
+function collision(b, p) {
+	if(b.x + ball[0].radius >= p.x && b.x -ball[0].radius <=p.x + p.w) {
+		if(b.y >= (p.y - p.h) && p.y > 0){
+			paddleHit = 1;
+			return true;
+		}
+		
+		else if(b.y <= p.h && p.y == 0) {
+			paddleHit = 2;
+			return true;
+		}
+		
+		else return false;
+	}
+}
+
+//충돌시
+function collisionAction(ball, p) {
+	ball.vy = -ball.vy;
+	
+	if(paddleHit == 1) {
+		ball.y = p.y - p.h;
+		
+	}
+	
+	else if(paddleHit == 2) {
+		ball.y = p.h + ball.radius;
+
+	}
+	
+	points++;
+    if((points%10)==0){level++;}    //포인트 10마다 레벨업
+    
+}
+
+
+// 스코어 업데이트
+function updateScore() {
+	ctx.fillStlye = "white";
+	ctx.font = "16px Arial, sans-serif";
+	ctx.textAlign = "left";
+	ctx.textBaseline = "top";
+	ctx.fillText("Score: " + points, 20, 20);
+   
+}
+//시간 업데이트
+function updateTime(){
+    ctx.fillStlye = "white";
+	ctx.font = "16px Arial, sans-serif";
+	ctx.textAlign = "left";
+	ctx.textBaseline = "top";
+    ctx.fillText("duration: "+ setTimeout(count++,1000), 20, 40);
+}
+//레벨 업데이트
+function updatelevel(){
+    ctx.fillStlye = "white";
+	ctx.font = "16px Arial, sans-serif";
+	ctx.textAlign = "left";
+	ctx.textBaseline = "bottom";
+    ctx.fillText("level: "+ level, 20, 20);
+}
+
+// game over 표시
+function gameOver() {
+	ctx.fillStlye = "white";
+	ctx.font = "20px Arial, sans-serif";
+	ctx.textAlign = "center";
+	ctx.textBaseline = "middle";
+	ctx.fillText("Game Over - You level "+level+"!", W/2, H/2 + 25 );
+	
+	// 동작을 정지한다.
+	cancelRequestAnimFrame(init);
+	
+	// over flag로 gameover체크
+	over = 1;
+	
+	// 다시시작 버튼 
+	restartBtn.draw();
+}
+
+// 반복하는 function을 만들어준다.
+function animloop() {
+	init = requestAnimFrame(animloop);
+	draw();
+}
+
+// 화면에 그릴 준비를 한다.
+function startScreen() {
+	draw();
+	startBtn.draw();
+}
+
+// 마우스 버튼 클릭에 대한 함수이다.
+function btnClick(e) {
+	
+	// 버튼범위를 지정한다.
+	var mx = e.pageX,
+		my = e.pageY;
+	
+	// 시작 버튼 클릭
+	if(mx >= startBtn.x && mx <= startBtn.x + startBtn.w) {
+		animloop();
+		
+		// 시작버튼을 눌렀을 때 사라지게 하고 실행
+		startBtn = {};
+	}
+	
+	// 다시 시작 버튼을 눌렀을때의 초기화
+	if(over == 1) {
+		if(mx >= restartBtn.x && mx <= restartBtn.x + restartBtn.w) {
+			level=1;
+            points=0;
+			animloop();
+			
+			over = 0;
+		}
+	}
+}
+
+// 화면에 뿌려주기 시작한다.
+startScreen();
+    </script>
+</body>
+</html>

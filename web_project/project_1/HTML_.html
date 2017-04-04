@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>asd</title>
+    <link rel="stylesheet" href="main.css">
+    <style >
+        .a{
+            color:crimson; 
+        }
+    </style>
+</head>
+<body>
+   <h1>HTML Tag 정리</h1>
+   <hr>
+   <h2>기본 구조</h2>
+    <p>
+    <ul class="outside">
+        <li><div class="a">&lt;!DOCTYPE&gt;</div> : 마크업 언어용 DTD 태그이다. HTML5는 다음과 같이 써준다.</li>
+        <li><div class="a">&lt;HTML&gt;</div> 문서의 속성을 지정하기 위한 태그. 이 태그안에 타이틀이나 메타 태그를 넣는다.</li>
+        <li><div class="a">&lt;body&gt;</div> HTML 문서의 본 모양을 나타내기 위한 태그. </li>
+        <li><div class="a">&lt;title&gt;</div>HTML의 제목을 선언하는 태그. </li>
+        <li><div class="a">&lt;meta&gt;</div> H부가 정보를 선언하는 태그.. </li>
+        <li><div class="a">&lt;charset&gt;</div> 인코딩을 선언하는 태그로 HTML5에서 추가되었다. 이전까지는 <meta> 태그로 선언했었다. </li>
+        <li><div class="a">&lt;link&gt;</div> 별도의 CSS 선언 등을 연결해주는 태그. </li>
+        
+    </ul>
+    </p>
+    
+    <hr>
+    <h2>텍스트 관련</h2> 
+    <p>
+    <ul>
+        <li><div class="a">&lt;h&gt;</div> 제목(heading)을 표시할 때 사용된다. &lt;h1&gt;이 가장 크고 &lt;h6&gt;이 가장 작다. 크기는 브라우저마다 표시하는 방법이 달라 다르게 나타날 수 있다. CSS를 쓰면 크기, 색상, 폰트 등을 변경할 수 있다. </li>
+        <li><div class="a">&lt;p&gt;</div> 문단을 열어주는 태그. 이 태그를 사용하면 기본적으로 문단 하단에 약 1줄 가량의 빈 공간이 생기기 때문에 &lt;br&gt; 을 써주는 경우가 많은데, 문단이라면 &lt;p&gt; 태그로 묶어주는 것이 올바른 사용 방법이다. 이는 css로 지정하여 없앨 수 있다. </li>
+        <li><div class="a">&lt;b&gt;</div> 두껍게&#40;bold&#41; 효과를 준다. </li>
+        <li><div class="a">&lt;i&gt;</div> 텍스트 italic꼴로 표시 </li>
+        <li><div class="a">&lt;strong&gt;</div> 포함된 텍스트를 <strong>강조</strong>할때 사용한다. </li>
+        <li><div class="a">&lt;em&gt;</div> 약하게 <em>강조</em>할때 사용한다. </li>
+    
+    </ul>
+    
+    
+    </p>
+    
+    <hr >
+    <h2 >목록</h2>         
+    <p >
+    <ul class="outside">
+    <li ><div class="a">&lt;ul&gt;</div> 순서가 없는 목록을 표시한다. 현재 필자가 사용하는 태그이다. </li>
+    <li ><div class="a">&lt;li&gt;</div> 목록에서 각 항목은 &lt;li&gt;와&lt;/li&gt;사이에 넣는다.</li>
+        <li ><div class="a">&lt;ol&gt;</div> 순서가 있는 목록을 표시</li>
+        <li><div class="a">&lt;dl&gt;</div> 정의 목록을 표시</li>
+        <li><div class="a">&lt;dt&gt;</div> 정의 목록의 뜻풀이를 기술한다.</li>
+    
+    </ul>
+    </p>
+    <hr>
+    <h2>링크, 이미지</h2>         
+    <p>
+    <ul class="outside">
+        <li ><div class="a">&lt;a&gt;</div> 하이퍼링크를 생성하는 태그이다. href 속성을 써서 작성한다.a와 a는 곂쳐서 사용하지 않는다.</li>
+        <a href="http://www.jbnu.ac.kr/main/main.php">전북대학교</a>
+        <li ><div class="a">&lt;img /&gt;</div> 이미지를 추가해주는 태그 </li>
+                <ul class="outside">
+                    <li>src: 이미지 파일의 경로를 지정한다.</li>
+                    <li>alt: 이미지를 볼 수 없을 경우 이미지에 대한 설명을 제공, 이미지가 출력되면 표기되지는 않는다</li>
+                    <li>title: 이미지에 대한 추가 정보를 제공한다. </li>
+                    <li>height,width: 이미지의 세로,가로폭을 지정</li>
+                </ul>
+            <img src="2000%EC%88%98%EC%A0%95.jpg" alt="물방울 사진" title="물방울" width="200px">
+        <li><div class="a">&lt;svg&gt;</div> 페이지에 svg형신의 그래픽을 추가해준다.</li>
+        <li><div class="a">&lt;progress&gt;</div> 페이지에 진행 상황 막대를 추가하는 태그이다.</li>
+      
+        
+    </ul>
+    </p>
+
+    <hr>
+    <h2>테이블</h2>         
+    <p>
+    <ul class="outside">
+        <li ><div class="a">&lt;table&gt;</div> 테이블을 만드는 태그</li>
+        <li ><div class="a">&lt;tr&gt;</div> 행을 시작한다.</li>
+        <li ><div class="a">&lt;td&gt;</div> 셀을 표현한다. </li>
+        <table>
+            <tr>
+                <td>테</td>
+                <td>스</td>
+                <td>트</td>
+            </tr>
+        </table>
+        <li><div class="a">&lt;th&gt;</div>테이블의 행, 열의 머리말을 나타냄 </li>
+           <p> <table>
+              <tr>
+                <th>날짜</th>
+                <th>수입</th>
+                <th>수출</th>
+              </tr>
+              <tr>
+                <td>1월 1일</td>
+                <td>100,000</td>
+                <td>100,000</td>
+              </tr>
+            </table>
+        </p>
+            
+<li> colspan, rowspan 속성으로 병합할 수 있다.</li>
+           <p>
+            <table>
+              <tr>
+                <td>날짜</td>
+                <td rowspan="2" >수입</td>
+                <td>수출</td>
+              </tr>
+              <tr>
+                <td>1월 1일</td>
+            <!-- 병합됨  -->
+                <td>100,000</td>
+              </tr>
+            </table>
+        </p>
+        <li><div class="a">&lt;caption&gt;</div> 테이블의 제목을 기술한다.</li>
+        <li><div class="a">&lt;colgroup&gt;,&lt;colgroup&gt;</div> 테이블 상단에 넣어 테이블의 열 정보를 기술. 셀의 너비를 지정할 때 쓰인다. </li>
+        <li><div class="a">&lt;thead&gt;,&lt;tbody&gt;,&lt;tfoot&gt;</div> 테이블의 세부 구조를 기술 한다. 각각 상단 본문 하단 </li>
+        
+    </ul>
+    </p>
+    
+    <hr>
+    <h2>폼</h2>         
+    <p>
+     CGI&#40;PHP, ADP, JSP 등&#41;와 상호작용하기 위해 입력값을 받는 역할<br>
+     &lt;form&gt; 태그 - *폼 만들기*<br>
+       └ 폼을 만드는 가장 기본적인 태그. &lt;form&gt; 태그와&lt;form&gt; 태그 사이에 여러 폼요소와 관련된 태그를 넣는다.<br>
+       └ &lt;form&gt; 태그 형식<br>
+        &lt;form 속성="속성값"&gt; 여러 폼 요소 &lt;/form&gt;    ← &lt;form&gt; 태그의 속성 형식<br><br>
+    [폼 태그의 속성]
+        <p>1. method
+        폼을 전송할 방식을 선택하는 속성.
+        사용할 수 있는 값은 get과 post 로서 get은 256 ~ 4096 바이트의 정보만을 서보로 넘길 수 있다.하지만 post는 사용자의 입력 내용의 길이에 제한을 받지 않는다. 그래서 대개 post를 사용한다.
+        ex) &lt;form method="post"&gt;&lt;/form&gt;
+        </p>
+        <p>
+        2. name
+        한 문서 안에 여러 개의 폼이 있을 수 있기 때문에 폼을 식별하기 위한 폼의 이름.
+        </p>
+        <p>
+        3. action
+        폼을 전송할 서버 쪽의 스크립트 파일을 지정.
+        </p>    
+        4. target
+        현재 창이나 다른 창에서 열릴지 새창의 위치를 정해준다.
+            
+    <ul class="outside">
+      
+       
+        <li><div class="a">&lt;form&gt;</div> 입력값을 받는 영역을 지정한다. 한 페이지에 여러 개가 들어갈 수는 있지만, 영역 안에 영역이 들어가는 것은 불가능하다.</li>
+        <li><div class="a">&lt;input&gt;</div> 입력값 요소 지정. type에 따라 다른 입력값을 취함 </li>
+            <ul>
+                <li>&lt;text&gt; : 한 줄 짜리 문자열 값</li>
+                <li>&lt;number&gt; : 숫자</li>
+                <li>&lt;url&gt; : 도메인 주소</li>
+                <li>&lt;email&gt; : 이메일</li>
+                <li>&lt;tel&gt; : 전화번호</li>
+                <li>&lt;search&gt; : 검색어</li>
+                <li>&lt;range&gt; : 지정한 범위의 숫자</li>
+                <li>&lt;color&gt; : 색</li>
+                <li>&lt;date&gt; : 날짜</li>
+                <li>&lt;time&gt; : 시간</li>
+                <li>&lt;datetime&gt; : 날짜 + 시간</li>
+                <li>&lt;checkbox&gt; : 체크박스</li>
+                <li>&lt;radio&gt; : 라디오 버튼</li>
+                <li>&lt;button&gt; : 버튼</li>
+                <li>&lt;submit&gt; : 누를 경우 입력값 전송</li>
+                <li>&lt;reset&gt; : 누를 경우 입력값 초기화</li>
+                <li>&lt;hidden&gt; : 입력값을 수정하지 않고 보낼때 사용. 소스를 열어보지 않으면 사용자에게는 보이지 않는다.</li>
+                <li>&lt;file&gt; : 파일 업로드에 쓰임 </li>
+                
+            </ul>
+            
+       <li><div class="a">&lt;textarea&gt;</div>여러 줄의 문자열 값을 받는다. </li>
+       <li><div class="a">&lt;output&gt;</div>input태그 처럼 입력값이지만 수정할 수 없다. </li>
+       <li><div class="a">&lt;datalist&gt;</div>검색어에 들어갈 목록을 지정한다. </li>
+       <li><div class="a">&lt;select&gt;</div>선택 목록</li>
+           <ul>
+               <li>&lt;option&gt; : 선택 목록에 들어갈 항목, radio와 비슷하다.</li>
+           </ul>
+        <li><div class="a">&lt;legend&gt;</div> 범례를 지정한다.</li>
+        <li><div class="a">&lt;label&gt;</div> 해당하는 요소의 이름을 지정</li>
+    </ul>
+    </p>
+    
+    <hr>
+    <h2>기타</h2>         
+    <p>
+    <ul class="outside">
+        <li><div class="a">&lt;iframe&gt;</div> 페이지 안에서 또 페이지를 볼수 있다. 예를 들면 문서에서 구글 지도, youtube 등을 보는 것</li>
+            <ul>
+                <li>&lt;src&gt; : 넣을 페이지의 주소를 지정한다.</li>
+                <li>&lt;height&gt;,&lt;width&gt; : 프레임의 높이, 너비를 지정한다.</li>
+                <li>&lt;frameborder&gt; : 프레임의 테두리 표시 여부를 지정한다. 0은 표시하지 않음, 1은 표시</li>
+            </ul>
+        
+        
+        &lt;iframe width="560" height="315" src="https://www.youtube.com/embed/a2GujJZfXpg" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;<br>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/a2GujJZfXpg" frameborder="0" allowfullscreen></iframe>
+        
+        <li><div class="a">&lt;object&gt;</div> 웹 페이지 또는 외부 프로그램을 임베드 한다. </li>
+        <li><div class="a">&lt;style&gt;</div>css를 사용한다. </li>
+        <li><div class="a">&lt;script&gt;</div> 자바스크립트나 vb스크립트를 사용</li>
+</ul>
+</p>
+    
+</body>
+</html>
